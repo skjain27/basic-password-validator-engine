@@ -81,7 +81,7 @@ public class BasicValidatorPasswordTest {
 	public void testNullPassword() {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate(null));
-		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
+		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password is Empty or Null "));
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class BasicValidatorPasswordTest {
 	public void testEmptyPassword() {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate(""));
-		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
+		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password is Empty or Null "));
 	}
 
 	/**
