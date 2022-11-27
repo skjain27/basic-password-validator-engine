@@ -12,3 +12,7 @@ The application is to validate password with respect to following rules
 Use cases
 
 ![image](https://user-images.githubusercontent.com/119150409/204125303-c1b2754c-da95-4375-8316-94cf65aa1843.png)
+
+Features Added
+1. If any of the three conditions are met then make password as successful
+2. All rules execution should not exceed a total of 3 seconds thereby achieve parallelism else terminate the process
