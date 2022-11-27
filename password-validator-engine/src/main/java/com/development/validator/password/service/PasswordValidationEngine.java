@@ -29,6 +29,11 @@ public class PasswordValidationEngine {
 			messages.add("Password should be of atleast 8 characters");
 			return false;
 		}
+		
+		if(!password.chars().anyMatch(p->Character.isLetter(p) && Character.isUpperCase(p))) {
+			messages.add("Password should have atleast one upper case character");
+			return false;
+		}
 		return true;
 
 	}
