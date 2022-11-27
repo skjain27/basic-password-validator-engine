@@ -3,6 +3,8 @@ package com.development.validator.password.service;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.not;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,14 +18,15 @@ import org.junit.Test;
  */
 
 public class BasicValidatorPasswordTest {
-
+	
+	private PasswordValidationEngine passwordValidationEngine;
 	/**
 	 * This method will be executed at the beginning of the unit test execution
 	 */
 	@BeforeClass
 	public void initTesting() {
 		System.out.println("Started Unit Testing for Password Validation");
-
+		passwordValidationEngine=new PasswordValidationEngine();
 	}
 
 	/**
@@ -47,7 +50,6 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testInvalidPasswordLength() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate("1234"));
 		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should be of atleast 8 characters"));
 	}
@@ -57,8 +59,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testValidMinimumPasswordLength() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertTrue(passwordValidationEngine.validate("12345678"));
+		assertTrue(passwordValidationEngine.validate("12345Wa678"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
 				not(hasItem("Password should be of atleast 8 characters")));
 	}
@@ -68,8 +69,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testValidPasswordLength() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertTrue(passwordValidationEngine.validate("12345678"));
+		assertTrue(passwordValidationEngine.validate("12345Wa678"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
 				not(hasItem("Password should be of atleast 8 characters")));
 	}
@@ -79,7 +79,6 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testNullPassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate(null));
 		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password is Empty or Null "));
 	}
@@ -89,7 +88,6 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testEmptyPassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate(""));
 		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password is Empty or Null "));
 	}
@@ -99,8 +97,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testNonEmptyPassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertTrue(passwordValidationEngine.validate("12243231"));
+		assertTrue(passwordValidationEngine.validate("1224Wa3231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
 	}
 	
@@ -109,8 +106,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testNoUpperCasePassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertFalse(passwordValidationEngine.validate("12243231"));
+		assertFalse(passwordValidationEngine.validate("12243a231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one upper case character"));
 	}
 	
@@ -119,8 +115,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testUpperCasePassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertTrue(passwordValidationEngine.validate("12W43231"));
+		assertTrue(passwordValidationEngine.validate("12W43a231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one upper case character")));
 	}
 	
@@ -129,8 +124,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testNoLowerCasePassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertFalse(passwordValidationEngine.validate("12243231"));
+		assertFalse(passwordValidationEngine.validate("122W43231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one lower case character"));
 	}
 	
@@ -139,7 +133,6 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testLowerCasePassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertTrue(passwordValidationEngine.validate("12aW43231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one lower case character")));
 	}
@@ -149,8 +142,7 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testNoNumericPassword() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertFalse(passwordValidationEngine.validate("password"));
+		assertFalse(passwordValidationEngine.validate("passworWd"));
 		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one numeric character"));
 	}
 	
@@ -159,8 +151,12 @@ public class BasicValidatorPasswordTest {
 	 */
 	@Test
 	public void testPasswordWithNumeric() {
-		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertTrue(passwordValidationEngine.validate("12aW43231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one numeric character")));
+	}
+	
+	@Test
+	public void testThreeConditions() {
+		assertTrue(passwordValidationEngine.validate("123Pa"));
 	}
 }
