@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.development.validator.password.handler.enums.ValidationRulesType;
 import com.development.validator.password.handler.interfaces.PasswordValidationRule;
-import com.development.validator.password.rules.CharacterRule;
+import com.development.validator.password.util.GenericPropertyReader;
 
 /**
  * 
@@ -34,7 +34,7 @@ public class RuleValidationEngine {
 		if (ruleListPresent()) {
 			List<Runnable> rules = new ArrayList<>();
 			for (PasswordValidationRule r : ruleList) {
-				Runnable rule=()-> execute(r, password);
+				Runnable rule = () -> execute(r, password);
 				rules.add(rule);
 			}
 			new RulesExecutionService().executeRules(rules);
@@ -61,7 +61,8 @@ public class RuleValidationEngine {
 	}
 
 	private Boolean criteriaSatisfied() {
-		return ((validCount.get() > 2) && !mandatoryRuleFailure);
+		return ((validCount.get() > GenericPropertyReader.getInstance().getProperty("validation.rules.count"))
+				&& !mandatoryRuleFailure);
 	}
 
 	public List<String> getErrorMessages() {
