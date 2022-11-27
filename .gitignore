@@ -4,11 +4,6 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
@@ -23,3 +18,13 @@
 hs_err_pid*
 replay_pid*
 /.metadata/
+
+HELP.md
+target/
+**/src/main/**/target/
+**/src/test/**/target/
+
+## Build ##
+build/
+**/src/main/**/build/
+**/src/test/**/build/
