@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.development.validator.password.handler.enums.ValidationRulesType;
 import com.development.validator.password.rules.CharacterRule;
 import com.development.validator.password.rules.PasswordLengthRule;
 import com.development.validator.password.rules.PasswordLowerCaseRule;
@@ -24,7 +25,7 @@ public class PasswordValidationEngine {
 	public PasswordValidationEngine() {
 		this.messages = new ArrayList<String>();
 		ruleValidationEngine = new RuleValidationEngine(Arrays.asList(new PasswordLengthRule(),
-				new CharacterRule(new PasswordUpperCaseRule()), new CharacterRule(new PasswordLowerCaseRule()),
+				new CharacterRule(new PasswordUpperCaseRule()), new CharacterRule(new PasswordLowerCaseRule(),ValidationRulesType.MANDATORY),
 				new CharacterRule(new PasswordNumericCharacterRule())));
 	}
 

@@ -1,6 +1,5 @@
 package com.development.validator.password.handler.enums;
 
-
 /**
  * 
  * @author skjain27
@@ -8,5 +7,6 @@ package com.development.validator.password.handler.enums;
  */
 
 public enum ValidationRulesType {
+	NON_MANDATORY, MANDATORY;
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.development.validator.password.handler.enums.ValidationRulesType;
 import com.development.validator.password.handler.interfaces.PasswordValidationRule;
 import com.development.validator.password.rules.CharacterRule;
 
@@ -19,6 +20,7 @@ public class RuleValidationEngine {
 	private List<String> errorMessages;
 	private Integer validCount;
 	private Boolean valid;
+	private Boolean mandatoryRuleFailure = false;
 
 	public RuleValidationEngine(List<PasswordValidationRule> ruleList) {
 		this.ruleList = ruleList;
@@ -33,6 +35,8 @@ public class RuleValidationEngine {
 				Optional<String> errorMessage = r.validate(password);
 				if (errorMessage.isPresent())
 					errorMessages.add(errorMessage.get());
+				if (r.getValidationRuleType().equals(ValidationRulesType.MANDATORY))
+					setMandatoryRuleFailure();
 				else
 					incrementValidCount();
 			}
@@ -40,12 +44,16 @@ public class RuleValidationEngine {
 		}
 	}
 
+	private void setMandatoryRuleFailure() {
+		mandatoryRuleFailure = true;
+	}
+
 	private void setValid(Boolean criteriaSatisfied) {
 		this.valid = criteriaSatisfied;
 	}
 
 	private Boolean criteriaSatisfied() {
-		return (validCount > 2);
+		return ((validCount > 2) && !mandatoryRuleFailure);
 	}
 
 	public List<String> getErrorMessages() {
