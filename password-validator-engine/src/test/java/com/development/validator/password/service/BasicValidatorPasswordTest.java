@@ -2,6 +2,7 @@ package com.development.validator.password.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +23,7 @@ public class BasicValidatorPasswordTest {
 	@BeforeClass
 	public void initTesting() {
 		System.out.println("Started Unit Testing for Password Validation");
+
 	}
 
 	/**
@@ -47,8 +49,7 @@ public class BasicValidatorPasswordTest {
 	public void testInvalidPasswordLength() {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate("1234"));
-		assertThat(passwordValidationEngine.getErrorMessages(),
-				hasItem("Password should be of atleast 8 characters"));
+		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should be of atleast 8 characters"));
 	}
 
 	/**
@@ -57,7 +58,7 @@ public class BasicValidatorPasswordTest {
 	@Test
 	public void testValidMinimumPasswordLength() {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertFalse(passwordValidationEngine.validate("12345678"));
+		assertTrue(passwordValidationEngine.validate("12345678"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
 				not(hasItem("Password should be of atleast 8 characters")));
 	}
@@ -68,8 +69,38 @@ public class BasicValidatorPasswordTest {
 	@Test
 	public void testValidPasswordLength() {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
-		assertFalse(passwordValidationEngine.validate("12345678"));
+		assertTrue(passwordValidationEngine.validate("12345678"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
 				not(hasItem("Password should be of atleast 8 characters")));
+	}
+
+	/**
+	 * This method is used to test the password for null
+	 */
+	@Test
+	public void testNullPassword() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertFalse(passwordValidationEngine.validate(null));
+		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
+	}
+
+	/**
+	 * This method is used to test the password for empty
+	 */
+	@Test
+	public void testEmptyPassword() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertFalse(passwordValidationEngine.validate(""));
+		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
+	}
+
+	/**
+	 * This method is used to test the password for non null check
+	 */
+	@Test
+	public void testNonEmptyPassword() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertTrue(passwordValidationEngine.validate("12243231"));
+		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
 	}
 }
