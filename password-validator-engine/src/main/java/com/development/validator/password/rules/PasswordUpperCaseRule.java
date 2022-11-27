@@ -1,24 +1,25 @@
 package com.development.validator.password.rules;
 
-import java.util.Optional;
+import java.util.function.IntPredicate;
 
 import com.development.validator.password.handler.constants.ValidationConstants;
-import com.development.validator.password.handler.interfaces.PasswordValidationRule;
+import com.development.validator.password.handler.interfaces.CharacterCheckPredicate;
 
 /**
  * 
  * @author skjain27
  *
  */
-public class PasswordUpperCaseRule implements PasswordValidationRule {
+public class PasswordUpperCaseRule implements CharacterCheckPredicate {
 
 	@Override
-	public Optional<String> validate(String password) {
+	public IntPredicate getPredicate() {
+		return (p -> Character.isLetter(p) && Character.isUpperCase(p));
+	}
 
-		if (!password.chars().anyMatch(p -> Character.isLetter(p) && Character.isUpperCase(p))) {
-			return Optional.of(ValidationConstants.PASSWORD_UPPERCASE_MISMATCH);
-		}
-		return Optional.empty();
+	@Override
+	public String getErrorMessage() {
+		return ValidationConstants.PASSWORD_UPPERCASE_MISMATCH;
 	}
 
 }

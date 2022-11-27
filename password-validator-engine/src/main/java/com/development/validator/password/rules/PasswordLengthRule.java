@@ -21,6 +21,9 @@ public class PasswordLengthRule implements PasswordValidationRule {
 	@Override
 	public Optional<String> validate(String password) {
 
+		if (password == null || password.isEmpty())
+			return Optional.of(ValidationConstants.PASSWORD_NULL);
+
 		if (password.length() < 8)
 			return Optional.of(ValidationConstants.PASSWORD_LENGTH_MISMATCH);
 

@@ -10,16 +10,16 @@ import com.development.validator.password.handler.interfaces.CharacterCheckPredi
  * @author skjain27
  *
  */
-public class PasswordLowerCaseRule implements CharacterCheckPredicate {
+public class PasswordNumericCharacterRule implements CharacterCheckPredicate {
 
 	@Override
 	public IntPredicate getPredicate() {
-		return (p -> Character.isLetter(p) && Character.isLowerCase(p));
+		return (p -> Character.isDigit(p));
 	}
 
 	@Override
 	public String getErrorMessage() {
-		return ValidationConstants.PASSWORD_LOWERCASE_MISMATCH;
+		return ValidationConstants.PASSWORD_NUMERIC_MISMATCH;
 	}
 
 }
