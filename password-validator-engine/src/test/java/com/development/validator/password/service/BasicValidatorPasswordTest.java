@@ -18,15 +18,16 @@ import org.junit.Test;
  */
 
 public class BasicValidatorPasswordTest {
-	
+
 	private PasswordValidationEngine passwordValidationEngine;
+
 	/**
 	 * This method will be executed at the beginning of the unit test execution
 	 */
 	@BeforeClass
 	public void initTesting() {
 		System.out.println("Started Unit Testing for Password Validation");
-		passwordValidationEngine=new PasswordValidationEngine();
+		passwordValidationEngine = new PasswordValidationEngine();
 	}
 
 	/**
@@ -100,63 +101,74 @@ public class BasicValidatorPasswordTest {
 		assertTrue(passwordValidationEngine.validate("1224Wa3231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
 	}
-	
+
 	/**
 	 * This method is used to test the password for atleast one upper case letter
 	 */
 	@Test
 	public void testNoUpperCasePassword() {
 		assertFalse(passwordValidationEngine.validate("12243a231"));
-		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one upper case character"));
+		assertThat(passwordValidationEngine.getErrorMessages(),
+				hasItem("Password should have atleast one upper case character"));
 	}
-	
+
 	/**
 	 * This method is used to test the password for atleast one upper case letter
 	 */
 	@Test
 	public void testUpperCasePassword() {
 		assertTrue(passwordValidationEngine.validate("12W43a231"));
-		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one upper case character")));
+		assertThat(passwordValidationEngine.getErrorMessages(),
+				not(hasItem("Password should have atleast one upper case character")));
 	}
-	
+
 	/**
 	 * This method is used to test the password for atleast one lower case letter
 	 */
 	@Test
 	public void testNoLowerCasePassword() {
 		assertFalse(passwordValidationEngine.validate("122W43231"));
-		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one lower case character"));
+		assertThat(passwordValidationEngine.getErrorMessages(),
+				hasItem("Password should have atleast one lower case character"));
 	}
-	
+
 	/**
 	 * This method is used to test the password for atleast one lower case letter
 	 */
 	@Test
 	public void testLowerCasePassword() {
 		assertTrue(passwordValidationEngine.validate("12aW43231"));
-		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one lower case character")));
+		assertThat(passwordValidationEngine.getErrorMessages(),
+				not(hasItem("Password should have atleast one lower case character")));
 	}
-	
+
 	/**
 	 * This method is used to test the password for atleast one numeric character
 	 */
 	@Test
 	public void testNoNumericPassword() {
 		assertFalse(passwordValidationEngine.validate("passworWd"));
-		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one numeric character"));
+		assertThat(passwordValidationEngine.getErrorMessages(),
+				hasItem("Password should have atleast one numeric character"));
 	}
-	
+
 	/**
 	 * This method is used to test the password for atleast one numeric letter
 	 */
 	@Test
 	public void testPasswordWithNumeric() {
 		assertTrue(passwordValidationEngine.validate("12aW43231"));
-		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one numeric character")));
+		assertThat(passwordValidationEngine.getErrorMessages(),
+				not(hasItem("Password should have atleast one numeric character")));
 	}
-	
+
 	@Test
 	public void testThreeConditions() {
 		assertTrue(passwordValidationEngine.validate("123Pa"));
+	}
+
+	@Test
+	public void testLowerCaseMandatory() {
+		assertFalse(passwordValidationEngine.validate("124SD121"));
 	}
 }
