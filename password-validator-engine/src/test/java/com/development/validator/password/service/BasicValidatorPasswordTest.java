@@ -103,4 +103,24 @@ public class BasicValidatorPasswordTest {
 		assertTrue(passwordValidationEngine.validate("12243231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password is Empty or Null ")));
 	}
+	
+	/**
+	 * This method is used to test the password for atleast one upper case letter
+	 */
+	@Test
+	public void testNoUpperCasePassword() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertFalse(passwordValidationEngine.validate("12243231"));
+		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one upper case character"));
+	}
+	
+	/**
+	 * This method is used to test the password for atleast one upper case letter
+	 */
+	@Test
+	public void testUpperCasePassword() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertTrue(passwordValidationEngine.validate("12W43231"));
+		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one upper case character")));
+	}
 }
