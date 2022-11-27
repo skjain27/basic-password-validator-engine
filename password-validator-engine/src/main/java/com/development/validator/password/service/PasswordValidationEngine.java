@@ -40,6 +40,11 @@ public class PasswordValidationEngine {
 			return false;
 		}
 		
+		if(!password.chars().anyMatch(p->Character.isDigit(p))) {
+			messages.add("Password should have atleast one numeric character");
+			return false;
+		}
+		
 		return true;
 
 	}
