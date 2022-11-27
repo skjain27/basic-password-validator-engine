@@ -10,20 +10,14 @@ import com.development.validator.password.handler.interfaces.PasswordValidationR
  * @author skjain27
  *
  */
+public class PasswordUpperCaseRule implements PasswordValidationRule {
 
-public class PasswordLengthRule implements PasswordValidationRule {
-
-	/**
-	 * Validates Length mismatch
-	 * 
-	 * @param password
-	 */
 	@Override
 	public Optional<String> validate(String password) {
 
-		if (password.length() < 8)
-			return Optional.of(ValidationConstants.PASSWORD_LENGTH_MISMATCH);
-
+		if (!password.chars().anyMatch(p -> Character.isLetter(p) && Character.isUpperCase(p))) {
+			return Optional.of(ValidationConstants.PASSWORD_UPPERCASE_MISMATCH);
+		}
 		return Optional.empty();
 	}
 
