@@ -48,7 +48,7 @@ public class BasicValidatorPasswordTest {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate("1234"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
-				hasMessages("Password should be of atleast 8 characters"));
+				hasItem("Password should be of atleast 8 characters"));
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class BasicValidatorPasswordTest {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate("12345678"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
-				not(hasMessages("Password should be of atleast 8 characters")));
+				not(hasItem("Password should be of atleast 8 characters")));
 	}
 
 	/**
@@ -70,6 +70,6 @@ public class BasicValidatorPasswordTest {
 		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
 		assertFalse(passwordValidationEngine.validate("12345678"));
 		assertThat(passwordValidationEngine.getErrorMessages(),
-				not(hasMessages("Password should be of atleast 8 characters")));
+				not(hasItem("Password should be of atleast 8 characters")));
 	}
 }
