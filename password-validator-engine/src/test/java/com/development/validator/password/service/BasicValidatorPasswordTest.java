@@ -143,4 +143,24 @@ public class BasicValidatorPasswordTest {
 		assertTrue(passwordValidationEngine.validate("12aW43231"));
 		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one lower case character")));
 	}
+	
+	/**
+	 * This method is used to test the password for atleast one numeric character
+	 */
+	@Test
+	public void testNoNumericPassword() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertFalse(passwordValidationEngine.validate("password"));
+		assertThat(passwordValidationEngine.getErrorMessages(), hasItem("Password should have atleast one numeric character"));
+	}
+	
+	/**
+	 * This method is used to test the password for atleast one numeric letter
+	 */
+	@Test
+	public void testPasswordWithNumeric() {
+		PasswordValidationEngine passwordValidationEngine = new PasswordValidationEngine();
+		assertTrue(passwordValidationEngine.validate("12aW43231"));
+		assertThat(passwordValidationEngine.getErrorMessages(), not(hasItem("Password should have atleast one numeric character")));
+	}
 }
